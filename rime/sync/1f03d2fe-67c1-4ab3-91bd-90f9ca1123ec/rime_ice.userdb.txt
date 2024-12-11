@@ -1,0 +1,7 @@
+# Rime user dictionary
+#@/db_name	rime_ice
+#@/db_type	userdb
+#@/rime_version	1.7.3
+#@/tick	1
+#@/user_id	1f03d2fe-67c1-4ab3-91bd-90f9ca1123ec
+bian yi 	编译	c=1 d=1 t=1

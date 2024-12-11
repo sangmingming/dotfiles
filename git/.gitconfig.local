@@ -1,0 +1,5 @@
+[user]
+        name = sam sang
+        email = linming1007@gmail.com
+[credential]
+        helper = cache

@@ -1,0 +1,105 @@
+#!/usr/bin/env bash
+
+# bootstrap installs things
+
+cd "$(dirname "$0")/.."
+DOTFILES_ROOT=$(pwd -P)
+
+set -e 
+echo ''
+
+info () {
+  printf "\r  [ \033[00;34m..\033[0m ] $1\n"
+}
+
+user () {
+  printf "\r  [ \033[0;33m??\033[0m ] $1\n"
+}
+
+success () {
+  printf "\r\033[2K  [ \033[00;32mOK\033[0m ] $1\n"
+}
+
+fail () {
+  printf "\r\033[2K  [\033[0;31mFAIL\033[0m] $1\n"
+  echo ''
+  exit
+}
+
+setup_gitconfig() {
+    if ! [ -f git/.gitconfig.local ]; then
+        info 'setup gitconfig'
+        git_credential='cache'
+        if [ "$(uname -s)" == "Darwin" ]; then
+            git_credential='osxkeychain'
+        fi
+
+        user '⏩ Please input your git author name:'
+        read -e git_authorname
+        user '⏩ Please input your email for git:'
+        read -e git_email
+        sed -e "s/AUTHORNAME/$git_authorname/g" -e "s/AUTHOREMAIL/$git_email/g" -e "s/GIT_CREDENTIAL_HELPER/$git_credential/g" git/.gitconfig.local.example > git/.gitconfig.local
+    fi
+
+    cp git/.gitconfig.local ~/
+    cp git/.gitconfig ~/
+    cp git/.gitignore ~/
+        
+    success 'git config'
+}
+
+init_homebrew() {
+    if [ "$(uname -s)" == "Darwin" ]; then
+        info 'MacOs will install home-brew'
+        ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+        echo ">brew update"
+        brew update
+        echo ">brew upgrade"
+        brew  upgrade
+        echo ">brew bundle"
+        brew bundle
+    fi
+}
+
+init_nvim() {
+    if [[ ! -d ~/.config ]]; then
+        info "⚠️ config dir not exist, create it"
+        mkdir ~/.config
+    fi
+    info "⛏️ copy neovim config to config dir"
+    cp -r nvim  ~/.config/
+    success 'neovim'
+
+}
+
+init_zsh() {
+    info "🖥️ start copy zsh config"
+    cp zsh/.bash_aliases ~/
+    cp zsh/.bash_functions ~/
+    cp zsh/.path_env ~/
+    cp zsh/.zshrc ~/
+    success 'zsh base config'
+}
+
+init_rime() {
+    if [ "$(uname -s)" == "Darwin" ]; then
+        cp -r rime ~/Library/Rime
+    else
+        if [ ! -d ~/.local/share/fcitx5 ]; then
+            info "create fcitx5 dir"
+            mkdir ~/.local/share/fcitx5
+        fi
+        cp -r rime ~/.local/share/fcitx5/
+    fi
+    success 'rime config'
+
+}
+
+setup_gitconfig
+init_zsh
+init_nvim
+init_rime
+init_homebrew
+
+echo ''
+echo '❇️❇️ Finish all init, Enjoy your life'
