@@ -7,4 +7,9 @@ brew 'scrcpy'
 brew 'neovim'
 
 cask 'zed'
-
+cask 'squirrel'
+cask 'iterm2'
+cask 'telegram'
+cask 'google-chrome'
+cask 'localsend'
+cask 'android-studio'

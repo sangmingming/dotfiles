@@ -1,8 +1,13 @@
-aliash h='history'
+alias h='history'
 alias la='ls --color -A'
 alias lh='ls --color -h'
 alias l='ls --color --time-style=long-iso -lFh'
 alias lla='ls -F --color --time-style=long-iso -lA'
+
+#cd alias
+alias ~="cd ~"
+alias ..="cd .."
+
 #git
 alias ga="git add"
 alias gaa="git add --all"
