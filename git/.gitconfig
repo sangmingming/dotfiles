@@ -1,18 +1,46 @@
 [include]
     path = ~/.gitconfig.local
 
+[column]
+        ui = auto
+[branch]
+        sort = -committerdate
+[tag]
+        sort = version:refname
+[diff]
+        algorithm = histogram
+        colorMoved = plain
+        mnemonicPrefix = true
+        renames = true
 [color]
 	ui = auto
-    branch = auto
-    status = auto
-    diff = auto
-
+    	branch = auto
+    	status = auto
+    	diff = auto
+[push]
+        default = simple
+        autoSetupRemote = true
+        followTags = true
+[fetch]
+        prune = true
+        pruneTags = true
+        all = true
+[commit]
+        verbose = true
+[rerere]
+        enabled = true
+        autoupdate = true
+[pull]
+	rebase = true
+[merge]
+	#only wore after git version 2.3
+	conflictstyle = zdiff3
 [credential]
 	helper = cache --timeout=360000
 [core]
 	editor = vim
-    excludesfile = ~/.gitignore
+    	excludesfile = ~/.gitignore
 [init]
 	defaultBranch = main
 [help]
-    autocorrect = 1
+    autocorrect = prompt
